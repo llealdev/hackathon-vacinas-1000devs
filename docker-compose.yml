@@ -2,15 +2,16 @@ version: '3.8'
 
 services:
   main-db:
-    image: mysql:8.0
-    restart: always
-    container_name: main-db-mysql
+    image: mysql
+    container_name: mysql
     environment:
-      MYSQL_DATABASE: 'vacinacao'
-      MYSQL_ROOT_PASSWORD: '1'
+      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: vacinacao
     ports:
-      - '1111:3306'
+      - '3806:3306'
     expose:
       - '3306'
     volumes:
-      - ./data/db:/var/lib/mysql
+        - /data/db:/var/lib/mysql
+
+

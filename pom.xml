@@ -8,6 +8,13 @@
   <artifactId>vacinas-java</artifactId>
   <version>1.0</version>
 
+      <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
   <name>vacinas-java</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
