@@ -1,0 +1,99 @@
+package com.vacinas.dao;
+
+import com.vacinas.model.Vacina;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class VacinaDAO {
+private Connection conn;
+
+// Construtor que recebe a conexão
+public VacinaDAO(Connection conn) {
+    this.conn = conn;
+}
+
+// Método para buscar vacinas por faixa etária
+public List<Vacina> buscarPorFaixaEtaria(int idadeMinima, int idadeMaxima) {
+    List<Vacina> vacinas = new ArrayList<>();
+    String sql = "SELECT * FROM vacina WHERE limite_aplicacao BETWEEN ? AND ?";
+
+    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, idadeMinima);
+        stmt.setInt(2, idadeMaxima);
+
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Vacina vacina = new Vacina(
+                rs.getInt("id"),
+                rs.getString("vacina"),
+                rs.getString("descricao"),
+                rs.getObject("limite_aplicacao", Integer.class), // Pode ser null
+                rs.getString("publico_alvo")
+            );
+            vacinas.add(vacina);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return vacinas;
+}
+}
+
+
+public List buscarPorPaciente(int idPaciente) {
+List imunizacoes = new ArrayList<>();
+String sql = "SELECT * FROM imunizacao WHERE id_paciente = ?";
+
+try (Connection conn = ConexaoMySQL.getConnection();
+     PreparedStatement stmt = conn.prepareStatement(sql)) {
+     
+    stmt.setInt(1, idPaciente);
+    ResultSet rs = stmt.executeQuery();
+    
+    while (rs.next()) {
+        Imunizacao imunizacao = new Imunizacao(
+            rs.getInt("id"),
+            rs.getInt("id_paciente"),
+            rs.getInt("id_dose"),
+            rs.getDate("data_aplicacao"),
+            rs.getString("fabricante"),
+            rs.getString("lote"),
+            rs.getString("local_aplicacao"),
+            rs.getString("profissional_aplicador")
+        );
+        imunizacoes.add(imunizacao);
+    }
+} catch (SQLException e) {
+    e.printStackTrace();
+}
+
+return imunizacoes;
+}
+
+public List buscarPorVacina(int idVacina) {
+List doses = new ArrayList<>();
+String sql = "SELECT * FROM dose WHERE id_vacina = ?";
+
+try (Connection conn = ConexaoMySQL.getConnection();
+     PreparedStatement stmt = conn.prepareStatement(sql)) {
+     
+    stmt.setInt(1, idVacina);
+    ResultSet rs = stmt.executeQuery();
+    
+    while (rs.next()) {
+        Dose dose = new Dose(
+            rs.getInt("id"),
+            rs.getInt("id_vacina"),
+            rs.getString("dose"),
+            rs.getInt("idade_recomendada_aplicacao")
+        );
+        doses.add(dose);
+    }
+} catch (SQLException e) {
+    e.printStackTrace();
+}
+
+return doses;
+}
