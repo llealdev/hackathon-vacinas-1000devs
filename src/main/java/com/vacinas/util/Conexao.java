@@ -1,4 +1,4 @@
-package com.vacinas.config;
+package com.vacinas.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
