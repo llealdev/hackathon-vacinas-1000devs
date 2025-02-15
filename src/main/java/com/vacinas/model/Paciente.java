@@ -19,11 +19,11 @@ public class Paciente {
     }
 
     public Paciente(int id, String nome, String cpf, Sexo sexo, Date dataNascimento) {
-        setId(id) ;
-        setNome(nome) ;
-        setCpf(cpf) ;
-        setSexo(sexo) ;
-        setDataNascimento(dataNascimento) ;
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.sexo = sexo;
+        this.dataNascimento = dataNascimento;
     }
 
     public int getId(){

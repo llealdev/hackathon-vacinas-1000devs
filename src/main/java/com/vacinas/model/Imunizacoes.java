@@ -14,19 +14,19 @@ public class Imunizacoes {
     private String profissionalAplicador;
 
     public Imunizacoes(){
-        
+
     }
 
     public Imunizacoes(int id, int idPaciente, int idDose, Date dataAplicacao, String fabricante, String lote,
-        String localApicacao, String profissionalAplicador) {
-        setId(id);
-        setId_paciente(idPaciente);
-        setId_dose(idDose);
-        setDataAplicacao(dataAplicacao);
-        setFabricante(fabricante);
-        setLote(lote);
-        setLocalApicacao(localApicacao);
-        setProfissionalAplicador(profissionalAplicador);
+            String localApicacao, String profissionalAplicador) {
+        this.id = id;
+        this.idPaciente = idPaciente;
+        this.idDose = idDose;
+        this.dataAplicacao = dataAplicacao;
+        this.fabricante = fabricante;
+        this.lote = lote;
+        this.localApicacao = localApicacao;
+        this.profissionalAplicador = profissionalAplicador;
     }
 
     public int getId() {
@@ -37,19 +37,19 @@ public class Imunizacoes {
         this.id = id;
     }
 
-    public int getId_paciente() {
+    public int getIdPaciente() {
         return idPaciente;
     }
 
-    public void setId_paciente(int idPaciente) {
+    public void setIdPaciente(int idPaciente) {
         this.idPaciente = idPaciente;
     }
 
-    public int getId_dose() {
+    public int getIdDose() {
         return idDose;
     }
 
-    public void setId_dose(int idDose) {
+    public void setIdDose(int idDose) {
         this.idDose = idDose;
     }
 
@@ -95,9 +95,9 @@ public class Imunizacoes {
 
     @Override
     public String toString() {
-        return "ID:" + this.id + ", Id_paciente:" + this.idPaciente + ", Id_dose:" + this.idDose + ", DataAplicacao:"
-                + this.dataAplicacao + ", Fabricante:" + this.fabricante + ", Lote:" + this.lote + ", LocalApicacao:" + this.localApicacao
-                + ", ProfissionalAplicador:" + this.profissionalAplicador;
+        return "ID:" + this.id + ", Id Paciente:" + this.idPaciente + ", Id Dose:" + this.idDose + ", Data Aplicacao:"
+                + this.dataAplicacao + ", Fabricante:" + this.fabricante + ", Lote:" + this.lote + ", Local Apicacao:" + this.localApicacao
+                + ", Profissional Aplicador:" + this.profissionalAplicador;
     }
 
 }
