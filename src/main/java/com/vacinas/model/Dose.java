@@ -5,16 +5,16 @@ public class Dose {
     private int idVacina;
     private String dose;
     private int idadeRecomendadaAplicacao;
-    
+
     public Dose(){
-        
+
     }
 
     public Dose(int id, int idVacina, String dose, int idadeRecomendadaAplicacao) {
-        setId(id);
-        setId_vacina(idVacina);
-        setDose(dose);
-        setIdade_recomendada_aplicacao(idadeRecomendadaAplicacao);
+        this.id = id;
+        this.idVacina = idVacina;
+        this.dose = dose;
+        this.idadeRecomendadaAplicacao = idadeRecomendadaAplicacao;
     }
 
     public int getId() {
@@ -25,11 +25,11 @@ public class Dose {
         this.id = id;
     }
 
-    public int getId_vacina() {
+    public int getIdVacina() {
         return idVacina;
     }
 
-    public void setId_vacina(int idVacina) {
+    public void setIdVacina(int idVacina) {
         this.idVacina = idVacina;
     }
 
@@ -41,17 +41,17 @@ public class Dose {
         this.dose = dose;
     }
 
-    public int getIdade_recomendada_aplicacao() {
+    public int getIdadeRecomendadaAplicacao() {
         return idadeRecomendadaAplicacao;
     }
 
-    public void setIdade_recomendada_aplicacao(int idadeRecomendadaAplicacao) {
+    public void setIdadeRecomendadaAplicacao(int idadeRecomendadaAplicacao) {
         this.idadeRecomendadaAplicacao = idadeRecomendadaAplicacao;
     }
 
     @Override
     public String toString() {
-        return "ID:" + this.id + ", idVacina:" + this.idVacina + ", dose:" + this.dose + ", idadeRecomendadaAplicacao:"
+        return "ID:" + this.id + ", Id Vacina:" + this.idVacina + ", Dose:" + this.dose + ", Idade Recomendada Aplicacao:"
                 + this.idadeRecomendadaAplicacao;
     }
 
