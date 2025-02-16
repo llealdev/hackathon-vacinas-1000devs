@@ -131,4 +131,63 @@ public class VacinaDAO {
             e.printStackTrace();
         }
     }
+
+    // Método para listar vacinas por faixa etária
+    public List<Vacina> listarVacinasPorFaixaEtaria(Vacina.PublicoAlvo faixaEtaria) {
+        List<Vacina> vacinas = new ArrayList<>();
+        String sql = "SELECT * FROM vacina WHERE publico_alvo = ?;";
+
+        try {
+            Connection conn = Conexao.getConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, faixaEtaria.toString());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Vacina vacina = new Vacina();
+                vacina.setId(rs.getInt("id"));
+                vacina.setVacina(rs.getString("vacina"));
+                vacina.setDescricao(rs.getString("descricao"));
+                vacina.setLimiteAplicacao(rs.getInt("limite_aplicacao"));
+                vacina.setPublicoAlvo(Vacina.PublicoAlvo.valueOf(rs.getString("publico_alvo")));
+
+                vacinas.add(vacina);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return vacinas;
+    }
+
+        // Método para listar vacinas recomendadas acima de uma idade em meses
+    public List<Vacina> listarVacinasRecomendadasAcimaDeIdade(int meses) {
+        List<Vacina> vacinas = new ArrayList<>();
+        String sql = "SELECT * FROM vacina WHERE limite_aplicacao > ?;";
+
+        try {
+            Connection conn = Conexao.getConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, meses);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Vacina vacina = new Vacina();
+                vacina.setId(rs.getInt("id"));
+                vacina.setVacina(rs.getString("vacina"));
+                vacina.setDescricao(rs.getString("descricao"));
+                vacina.setLimiteAplicacao(rs.getInt("limite_aplicacao"));
+                vacina.setPublicoAlvo(Vacina.PublicoAlvo.valueOf(rs.getString("publico_alvo")));
+
+                vacinas.add(vacina);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return vacinas;
+    }
+
 }
