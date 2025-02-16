@@ -3,14 +3,13 @@ package com.vacinas.dao;
 import java.sql.*;
 import java.util.*;
 
-
 import com.vacinas.model.Imunizacoes;
 import com.vacinas.util.*;
 
 public class ImunizacoesDAO{
     
     // Método para cadastrar uma imunização
-    public void cadastrarVacina(Imunizacoes imunizacoes){
+    public static void cadastrarVacina(Imunizacoes imunizacoes){
         String sql =  "INSERT INTO imunizacoes (id_paciente, id_dose, data_aplicacao, fabricante, lote, local_aplicacao, profissional_aplicador) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         try {
@@ -39,7 +38,7 @@ public class ImunizacoesDAO{
     }
 
     // Método para buscar uma imunização por ID
-    public Imunizacoes buscarPorId(int id) {
+    public static Imunizacoes buscarPorId(int id) {
         String sql = "SELECT * FROM imunizacoes WHERE id = ?;";
         Imunizacoes imunizacao = null;
 
@@ -70,7 +69,7 @@ public class ImunizacoesDAO{
     }
     
     // Método para listar todas imunizações
-    public List<Imunizacoes> listarImunizacoes(){
+    public static List<Imunizacoes> listarImunizacoes(){
         List<Imunizacoes> imunizacoes = new ArrayList<>();
 
         String sql = "SELECT * FROM imunizacoes;";
@@ -101,7 +100,7 @@ public class ImunizacoesDAO{
     }
 
     // Método para atualizar os dados de uma imunização
-    public void atualizarImunizacoes(Imunizacoes imunizacoes) {
+    public static void atualizarImunizacoes(Imunizacoes imunizacoes) {
         String sql = "UPDATE imunizacoes SET id_paciente = ?, id_dose = ?, data_aplicacao = ?, fabricante = ?, lote = ?, local_aplicacao = ?, profissional_aplicador = ? " +
                      "WHERE id = ?;";
 
@@ -132,7 +131,7 @@ public class ImunizacoesDAO{
     }
 
     // Método para deletar uma imunizacação
-    public void deletarImunizacoes(int id) {
+    public static void deletarImunizacoes(int id) {
         String sql = "DELETE FROM imunizacoes WHERE id = ?;";
 
         try {
@@ -152,5 +151,87 @@ public class ImunizacoesDAO{
             e.printStackTrace();
         }
     }   
+    // Método para excluir todas as imunizações de um paciente
+    public static int excluirTodasImunizacoesPorPaciente(int idPaciente) {
+        String sql = "DELETE FROM imunizacoes WHERE id_paciente = ?;";
+
+        try {
+            Connection conn = Conexao.getConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idPaciente);
+
+            int rowsDeleted = stmt.executeUpdate();
+            return rowsDeleted; 
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0; 
+        }
+    }
+
+    // Método para consultar imunizações por ID do paciente
+    public static List<Imunizacoes> consultarImunizacoesPorPaciente(int idPaciente) {
+        List<Imunizacoes> imunizacoes = new ArrayList<>();
+        String sql = "SELECT * FROM imunizacoes WHERE id_paciente = ?;";
+
+        try {
+            Connection conn = Conexao.getConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idPaciente);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Imunizacoes imunizacao = new Imunizacoes();
+                imunizacao.setId(rs.getInt("id"));
+                imunizacao.setIdPaciente(rs.getInt("id_paciente"));
+                imunizacao.setIdDose(rs.getInt("id_dose"));
+                imunizacao.setDataAplicacao(rs.getDate("data_aplicacao"));
+                imunizacao.setFabricante(rs.getString("fabricante"));
+                imunizacao.setLote(rs.getString("lote"));
+                imunizacao.setLocalAplicacao(rs.getString("local_aplicacao"));
+                imunizacao.setProfissionalAplicador(rs.getString("profissional_aplicador"));
+
+                imunizacoes.add(imunizacao);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return imunizacoes;
+    }
+
+    // Método para consultar imunizações por ID do paciente e intervalo de datas
+    public static List<Imunizacoes> consultarImunizacoesPorPacienteEPeriodo(int idPaciente, java.sql.Date dataInicio, java.sql.Date dataFim) {
+        List<Imunizacoes> imunizacoes = new ArrayList<>();
+        String sql = "SELECT * FROM imunizacoes WHERE id_paciente = ? AND data_aplicacao BETWEEN ? AND ?;";
+
+        try {
+            Connection conn = Conexao.getConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idPaciente);
+            stmt.setDate(2, dataInicio);
+            stmt.setDate(3, dataFim);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Imunizacoes imunizacao = new Imunizacoes();
+                imunizacao.setId(rs.getInt("id"));
+                imunizacao.setIdPaciente(rs.getInt("id_paciente"));
+                imunizacao.setIdDose(rs.getInt("id_dose"));
+                imunizacao.setDataAplicacao(rs.getDate("data_aplicacao"));
+                imunizacao.setFabricante(rs.getString("fabricante"));
+                imunizacao.setLote(rs.getString("lote"));
+                imunizacao.setLocalAplicacao(rs.getString("local_aplicacao"));
+                imunizacao.setProfissionalAplicador(rs.getString("profissional_aplicador"));
+
+                imunizacoes.add(imunizacao);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return imunizacoes;
+    }
+
 
 }

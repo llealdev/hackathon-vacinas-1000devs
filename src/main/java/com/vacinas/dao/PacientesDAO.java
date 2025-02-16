@@ -9,28 +9,35 @@ import com.vacinas.util.Conexao;
 public class PacientesDAO {
     
     // Método para cadastrar um paciente
-    public void cadastrarPaciente(Paciente paciente) {
+    public static int cadastrarPaciente(Paciente paciente) {
         String sql = "INSERT INTO paciente (nome, cpf, sexo, data_nascimento) VALUES (?, ?, ?, ?);";
-
+    
         try {
             Connection conn = Conexao.getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+    
             stmt.setString(1, paciente.getNome());
             stmt.setString(2, paciente.getCpf());
             stmt.setString(3, paciente.getSexo().toString());
             stmt.setDate(4, paciente.getDataNascimento());
-
+    
             stmt.executeUpdate();
-            System.out.println("Paciente cadastrado com sucesso!");
-
+    
+            // Obtendo o ID gerado
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1); // Retorna o ID gerado
+            }
+    
         } catch (SQLException e) {
+            System.err.println("Erro ao cadastrar paciente: " + e.getMessage());
             e.printStackTrace();
         }
+        return -1;  // Caso não consiga retornar o ID
     }
 
     // Método para buscar um paciente por ID
-    public Paciente buscarPorId(int id) {
+    public static Paciente buscarPorId(int id) {
         String sql = "SELECT * FROM paciente WHERE id = ?;";
         Paciente paciente = null;
 
@@ -58,8 +65,8 @@ public class PacientesDAO {
     }
 
     // Método para listar todos os pacientes
-    public List<Paciente> listarPacientes() {
-        List<Paciente> pacientes = new ArrayList<>();
+    public static ArrayList<Paciente> listarPacientes() {
+        ArrayList<Paciente> pacientes = new ArrayList<>();
         String sql = "SELECT * FROM paciente;";
 
         try {
@@ -86,11 +93,10 @@ public class PacientesDAO {
     }
     
     // Método para atualizar os dados de um paciente
-    public void atualizarPaciente(Paciente paciente) {
+    public static int atualizarPaciente(Paciente paciente) {
         String sql = "UPDATE paciente SET nome = ?, cpf = ?, sexo = ?, data_nascimento = ? WHERE id = ?;";
-
+    
         try {
-
             Connection conn = Conexao.getConexao();
             PreparedStatement stmt = conn.prepareStatement(sql);
             
@@ -99,39 +105,34 @@ public class PacientesDAO {
             stmt.setString(3, paciente.getSexo().toString());
             stmt.setDate(4, paciente.getDataNascimento());
             stmt.setInt(5, paciente.getId());
-
-            int rowsUpdated = stmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Paciente atualizado com sucesso!");
-            } else {
-                System.out.println("Nenhum paciente encontrado para atualizar.");
-            }
-
+    
+            int rowsUpdated = stmt.executeUpdate(); // Retorna o número de linhas afetadas
+            return rowsUpdated; 
+    
         } catch (SQLException e) {
+            System.err.println("Erro ao atualizar paciente: " + e.getMessage());
             e.printStackTrace();
         }
+        return -1;  // Retorna -1 em caso de erro
     }
     
     // Método para deletar um paciente
-    public void deletarPaciente(int id) {
+    public static int deletarPaciente(int id) {
         String sql = "DELETE FROM paciente WHERE id = ?;";
-
+    
         try {
-
             Connection conn = Conexao.getConexao();
             PreparedStatement stmt = conn.prepareStatement(sql);
-
+    
             stmt.setInt(1, id);
-
-            int rowsDeleted = stmt.executeUpdate();
-            if (rowsDeleted > 0) {
-                System.out.println("Paciente deletado com sucesso!");
-            } else {
-                System.out.println("Nenhum paciente encontrado para deletar.");
-            }
-
+    
+            int rowsDeleted = stmt.executeUpdate(); // Retorna o número de linhas deletadas
+            return rowsDeleted;
+    
         } catch (SQLException e) {
+            System.err.println("Erro ao deletar paciente: " + e.getMessage());
             e.printStackTrace();
         }
+        return -1; // Retorna -1 em caso de erro
     }
 }
