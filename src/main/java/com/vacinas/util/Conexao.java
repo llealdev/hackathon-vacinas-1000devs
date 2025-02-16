@@ -10,7 +10,7 @@ public class Conexao {
     private static String USUARIO = "root";
     private static String SENHA = "1";
 
-    public Connection getConexao() throws SQLException {
+    public static Connection getConexao() throws SQLException {
 
         Connection c = null;
         try {
@@ -26,7 +26,7 @@ public class Conexao {
     }//fecha metodo  
     
 
-    public void closeConexao(Connection c){
+    public static void closeConexao(Connection c){
         if(c != null){
             try {
                 c.close();
