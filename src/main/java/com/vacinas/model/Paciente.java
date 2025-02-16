@@ -26,6 +26,12 @@ public class Paciente {
         this.dataNascimento = dataNascimento;
     }
 
+    public Paciente(String nome, String cpf, Sexo sexo, Date dataNascimento) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.sexo = sexo;
+        this.dataNascimento = dataNascimento;
+    }
     public int getId(){
         return id;
     }
