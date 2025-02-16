@@ -9,6 +9,7 @@ import com.vacinas.util.*;
 
 public class ImunizacoesDAO{
     
+    // Método para cadastrar uma imunização
     public void cadastrarVacina(Imunizacoes imunizacoes){
         String sql =  "INSERT INTO imunizacoes (id_paciente, id_dose, data_aplicacao, fabricante, lote, local_aplicacao, profissional_aplicador) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
@@ -37,12 +38,14 @@ public class ImunizacoesDAO{
         } 
     }
 
+    // Método para buscar uma imunização por ID
     public Imunizacoes buscarPorId(int id) {
         String sql = "SELECT * FROM imunizacoes WHERE id = ?;";
         Imunizacoes imunizacao = null;
 
-        try (Connection conn = Conexao.getConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = Conexao.getConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -65,7 +68,8 @@ public class ImunizacoesDAO{
 
         return imunizacao;
     }
-
+    
+    // Método para listar todas imunizações
     public List<Imunizacoes> listarImunizacoes(){
         List<Imunizacoes> imunizacoes = new ArrayList<>();
 
@@ -96,6 +100,7 @@ public class ImunizacoesDAO{
         return imunizacoes;
     }
 
+    // Método para atualizar os dados de uma imunização
     public void atualizarImunizacoes(Imunizacoes imunizacoes) {
         String sql = "UPDATE imunizacoes SET id_paciente = ?, id_dose = ?, data_aplicacao = ?, fabricante = ?, lote = ?, local_aplicacao = ?, profissional_aplicador = ? " +
                      "WHERE id = ?;";
@@ -126,15 +131,17 @@ public class ImunizacoesDAO{
         }
     }
 
-    public void deletarVacina(int id) {
+    // Método para deletar uma imunizacação
+    public void deletarImunizacoes(int id) {
         String sql = "DELETE FROM imunizacoes WHERE id = ?;";
 
-        try (Connection conn = Conexao.getConexao();
-             PreparedStatement smt = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = Conexao.getConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql); 
 
-            smt.setInt(1, id);
+            stmt.setInt(1, id);
 
-            int rowsDeleted = smt.executeUpdate();
+            int rowsDeleted = stmt.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("Vacina deletada com sucesso!");
             } else {
