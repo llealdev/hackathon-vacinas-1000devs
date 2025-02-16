@@ -10,7 +10,7 @@ public class Imunizacoes {
     private Date dataAplicacao;
     private String fabricante;
     private String lote;
-    private String localApicacao;
+    private String localAplicacao;
     private String profissionalAplicador;
 
     public Imunizacoes(){
@@ -18,14 +18,14 @@ public class Imunizacoes {
     }
 
     public Imunizacoes(int id, int idPaciente, int idDose, Date dataAplicacao, String fabricante, String lote,
-            String localApicacao, String profissionalAplicador) {
+            String localAplicacao, String profissionalAplicador) {
         this.id = id;
         this.idPaciente = idPaciente;
         this.idDose = idDose;
         this.dataAplicacao = dataAplicacao;
         this.fabricante = fabricante;
         this.lote = lote;
-        this.localApicacao = localApicacao;
+        this.localAplicacao = localAplicacao;
         this.profissionalAplicador = profissionalAplicador;
     }
 
@@ -77,12 +77,12 @@ public class Imunizacoes {
         this.lote = lote;
     }
 
-    public String getLocalApicacao() {
-        return localApicacao;
+    public String getLocalAplicacao() {
+        return localAplicacao;
     }
 
-    public void setLocalApicacao(String localApicacao) {
-        this.localApicacao = localApicacao;
+    public void setLocalAplicacao(String localAplicacao) {
+        this.localAplicacao = localAplicacao;
     }
 
     public String getProfissionalAplicador() {
@@ -96,7 +96,7 @@ public class Imunizacoes {
     @Override
     public String toString() {
         return "ID:" + this.id + ", Id Paciente:" + this.idPaciente + ", Id Dose:" + this.idDose + ", Data Aplicacao:"
-                + this.dataAplicacao + ", Fabricante:" + this.fabricante + ", Lote:" + this.lote + ", Local Apicacao:" + this.localApicacao
+                + this.dataAplicacao + ", Fabricante:" + this.fabricante + ", Lote:" + this.lote + ", Local Apicacao:" + this.localAplicacao
                 + ", Profissional Aplicador:" + this.profissionalAplicador;
     }
 
