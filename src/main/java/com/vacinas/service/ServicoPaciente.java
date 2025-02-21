@@ -1,11 +1,11 @@
 package com.vacinas.service;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.sql.Date;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vacinas.dao.PacientesDAO;
 import com.vacinas.model.Paciente;
@@ -16,21 +16,30 @@ import spark.Route;
 
 public class ServicoPaciente {
 
-    public static Route cadastrarPaciente() {
+public static Route cadastrarPaciente() {
         return new Route() {
             @Override
             public Object handle(Request request, Response response) throws Exception {
 
-                // extrai os parametros do boddy da requisicao http
-                String nome = request.queryParams("nome");
-                String cpf = request.queryParams("cpf");
-                String sexoStr = request.queryParams("sexo");
-                String dataNascimentoStr = request.queryParams("data_nascimento");
+                // Ler JSON do corpo da requisição
+                ObjectMapper objectMapper = new ObjectMapper();
+                Map<String, String> jsonMap = objectMapper.readValue(request.body(), new TypeReference<Map<String, String>>() {});
+
+                String nome = jsonMap.get("nome");
+                String cpf = jsonMap.get("cpf");
+                String sexoStr = jsonMap.get("sexo");
+                String dataNascimentoStr = jsonMap.get("data_nascimento");
 
                 // Converter a Data
-                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate localDate = LocalDate.parse(dataNascimentoStr, fmt);
-                Date dataNascimento = Date.valueOf(localDate.toString()); // Converter LocalDate para java.sql.Date
+                Date dataNascimento;
+                if (dataNascimentoStr != null && !dataNascimentoStr.isEmpty()) {
+                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate localDate = LocalDate.parse(dataNascimentoStr, fmt);
+                    dataNascimento = Date.valueOf(localDate); // Converter LocalDate para java.sql.Date
+
+                } else {
+                    throw new IllegalArgumentException("Data de nascimento não pode ser nula ou vazia.");
+                }
 
                 // Converter a string sexo para o enum Sexo
                 Paciente.Sexo sexo = Paciente.Sexo.valueOf(sexoStr.toUpperCase());
