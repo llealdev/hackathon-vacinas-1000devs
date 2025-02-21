@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Conexao {
     //Atributos estáticos com os dados do Banco de Dados
-    private static String URL = "--";
+    private static String URL = "";
     private static String USUARIO = "root";
     private static String SENHA = "1";
 

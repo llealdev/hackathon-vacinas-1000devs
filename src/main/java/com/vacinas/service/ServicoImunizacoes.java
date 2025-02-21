@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vacinas.dao.ImunizacoesDAO;
 import com.vacinas.model.Imunizacoes;
@@ -15,43 +17,52 @@ import spark.Route;
 
 public class ServicoImunizacoes {
 
-    public static Route cadastrarImunizacao() {
-        return new Route() {
-            @Override
-            public Object handle(Request request, Response response) throws Exception {
+public static Route cadastrarImunizacao() {
+    return new Route() {
+        @Override
+        public Object handle(Request request, Response response) throws Exception {
 
-                // Extrai os parâmetros do body da requisição HTTP
-                int idPaciente = Integer.parseInt(request.queryParams("id_paciente"));
-                int idDose = Integer.parseInt(request.queryParams("id_dose"));
-                String dataAplicacaoStr = request.queryParams("data_aplicacao");
-                String fabricante = request.queryParams("fabricante");
-                String lote = request.queryParams("lote");
-                String localAplicacao = request.queryParams("local_aplicacao");
-                String profissionalAplicador = request.queryParams("profissional_aplicador");
+            // Ler JSON do corpo da requisição
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, String> jsonMap = objectMapper.readValue(request.body(), new TypeReference<Map<String, String>>() {});
 
-                // Converter a Data
+            // Extrair os valores do JSON
+            int idPaciente = Integer.parseInt(jsonMap.get("id_paciente"));
+            int idDose = Integer.parseInt(jsonMap.get("id_dose"));
+            String dataAplicacaoStr = jsonMap.get("data_aplicacao");
+            String fabricante = jsonMap.get("fabricante");
+            String lote = jsonMap.get("lote");
+            String localAplicacao = jsonMap.get("local_aplicacao");
+            String profissionalAplicador = jsonMap.get("profissional_aplicador");
+
+            // Converter a Data
+            Date dataAplicacao;
+            if (dataAplicacaoStr != null && !dataAplicacaoStr.isEmpty()) {
                 DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate localDate = LocalDate.parse(dataAplicacaoStr, fmt);
-                Date dataAplicacao = Date.valueOf(localDate.toString());
-
-                // Cria o objeto imunização na memória
-                Imunizacoes imunizacao = new Imunizacoes(0, idPaciente, idDose, dataAplicacao, fabricante, lote, localAplicacao, profissionalAplicador);
-
-                try {
-                    // Cadastra a imunização no banco de dados
-                    ImunizacoesDAO.cadastrarVacina(imunizacao);
-
-                    // 201 Created
-                    response.status(201);
-                    return "{\"message\": \"Imunização cadastrada com sucesso.\"}";
-
-                } catch (Exception e) {
-                    response.status(500); // 500 Internal Server Error
-                    return "{\"message\": \"" + e.getMessage() + "\"}";
-                }
+                dataAplicacao = Date.valueOf(localDate); // Converter LocalDate para java.sql.Date
+            } else {
+                throw new IllegalArgumentException("Data de aplicação não pode ser nula ou vazia.");
             }
-        };
-    }
+
+            // Cria o objeto imunização na memória
+            Imunizacoes imunizacao = new Imunizacoes(0, idPaciente, idDose, dataAplicacao, fabricante, lote, localAplicacao, profissionalAplicador);
+
+            try {
+                // Cadastra a imunização no banco de dados
+                ImunizacoesDAO.cadastrarVacina(imunizacao);
+
+                // 201 Created
+                response.status(201);
+                return "{\"message\": \"Imunização cadastrada com sucesso.\"}";
+
+            } catch (Exception e) {
+                response.status(500); // 500 Internal Server Error
+                return "{\"message\": \"" + e.getMessage() + "\"}";
+            }
+        }
+    };
+}
 
     public static Route buscarImunizacaoPorId() {
         return new Route() {

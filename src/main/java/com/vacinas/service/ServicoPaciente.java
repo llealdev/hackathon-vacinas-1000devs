@@ -25,6 +25,7 @@ public static Route cadastrarPaciente() {
                 ObjectMapper objectMapper = new ObjectMapper();
                 Map<String, String> jsonMap = objectMapper.readValue(request.body(), new TypeReference<Map<String, String>>() {});
 
+                // Extrair os valores do JSON
                 String nome = jsonMap.get("nome");
                 String cpf = jsonMap.get("cpf");
                 String sexoStr = jsonMap.get("sexo");
