@@ -11,72 +11,72 @@ import com.vacinas.util.Conexao;
 import com.vacinas.model.Dose;
 
 public class DoseDAO {
-    private Conexao con;
-
-    public DoseDAO() {
-        con = new Conexao();
-    }
-
-    public void inserir(Dose dose){
-        String sql= "INSERT INTO dose (id_vacina, dose, idade_recomendada_aplicacao) VALUES (?, ?, ?)";
-
-        try (Connection conexao= con.getConexao();
-            PreparedStatement comando= conexao.prepareStatement(sql)) {
-            
-            comando.setInt(1, dose.getIdVacina());
-            comando.setString(2, dose.getDose());
-            comando.setInt(3, dose.getIdadeRecomendadaAplicacao());
-
-            comando.executeUpdate();
-
-            ResultSet resultado= comando.getGeneratedKeys();
-            if (resultado.next()) {
-                dose.setId(resultado.getInt(1));
+    private static Conexao con;
+    
+        public DoseDAO() {
+            con = new Conexao();
+        }
+    
+        public static void inserir(Dose dose){
+            String sql= "INSERT INTO dose (id_vacina, dose, idade_recomendada_aplicacao) VALUES (?, ?, ?)";
+    
+            try (Connection conexao= con.getConexao();
+                PreparedStatement comando= conexao.prepareStatement(sql)) {
+                
+                comando.setInt(1, dose.getIdVacina());
+                comando.setString(2, dose.getDose());
+                comando.setInt(3, dose.getIdadeRecomendadaAplicacao());
+    
+                comando.executeUpdate();
+    
+                ResultSet resultado= comando.getGeneratedKeys();
+                if (resultado.next()) {
+                    dose.setId(resultado.getInt(1));
+                }
+    
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-    }
+        
+        public static void atualizar(Dose dose){
+            String sql = "UPDATE dose SET id_vacina = ?, dose = ?, idade_recomendada_aplicacao = ? WHERE id = ?";
     
-    public void atualizar(Dose dose){
-        String sql = "UPDATE dose SET id_vacina = ?, dose = ?, idade_recomendada_aplicacao = ? WHERE id = ?";
-
-        try (Connection conexao= con.getConexao();
-            PreparedStatement comando= conexao.prepareStatement(sql)) {
-
-            comando.setInt(1, dose.getIdVacina());
-            comando.setString(2, dose.getDose());
-            comando.setInt(3, dose.getIdadeRecomendadaAplicacao());
-            comando.setInt(4, dose.getId());
-
-            comando.executeUpdate();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void excluir(int id){
-        String sql= "DELETE FROM dose WHERE id = ?";
-
-        try (Connection conexao= con.getConexao();
-            PreparedStatement comando= conexao.prepareStatement(sql)) {
-            
-            comando.setInt(1, id);
-            comando.executeUpdate();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+            try (Connection conexao= con.getConexao();
+                PreparedStatement comando= conexao.prepareStatement(sql)) {
     
-    public Dose buscarPorId(int id){
-        String sql= "SELECT * FROM dose WHERE id = ?";
-        Dose dose = null;
-
-        try (Connection conexao = con.getConexao();
+                comando.setInt(1, dose.getIdVacina());
+                comando.setString(2, dose.getDose());
+                comando.setInt(3, dose.getIdadeRecomendadaAplicacao());
+                comando.setInt(4, dose.getId());
+    
+                comando.executeUpdate();
+    
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    
+        public static void excluir(int id){
+            String sql= "DELETE FROM dose WHERE id = ?";
+    
+            try (Connection conexao= con.getConexao();
+                PreparedStatement comando= conexao.prepareStatement(sql)) {
+                
+                comando.setInt(1, id);
+                comando.executeUpdate();
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    
+        }
+        
+        public static Dose buscarPorId(int id){
+            String sql= "SELECT * FROM dose WHERE id = ?";
+            Dose dose = null;
+    
+            try (Connection conexao = con.getConexao();
             PreparedStatement comando= conexao.prepareStatement(sql)) {
 
                 comando.setInt(1, id);
@@ -98,7 +98,7 @@ public class DoseDAO {
         return dose;
     }
 
-    public ArrayList<Dose> listarTodos(){
+    public static ArrayList<Dose> listarTodos(){
         String sql = "SELECT * FROM dose";
         ArrayList<Dose> listaDoses= new ArrayList<Dose>();
 

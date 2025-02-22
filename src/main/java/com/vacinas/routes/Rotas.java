@@ -1,6 +1,7 @@
 package com.vacinas.routes;
 
 
+import com.vacinas.service.ServicoDose;
 import com.vacinas.service.ServicoEstatisticas;
 import com.vacinas.service.ServicoImunizacoes;
 import com.vacinas.service.ServicoPaciente;
@@ -38,5 +39,9 @@ public class Rotas {
         Spark.get("/estatisticas/proximas_imunizacoes/paciente/:id", ServicoEstatisticas.contarVacinasProximoMesPorPaciente());
         Spark.get("/estatisticas/imunizacoes_atrasadas/paciente/:id", ServicoEstatisticas.contarVacinasAtrasadasPorPaciente());
         Spark.get("/estatisticas/imunizacoes/idade_maior/:meses", ServicoEstatisticas.contarVacinasAcimaDeIdade());
+
+        // Rotas para Doses
+        Spark.get("/dose/consultar/:id", ServicoDose.buscarDosePorId());
+        Spark.get("/dose/consultar", ServicoDose.consultarTodasDoses());
     }
 }
