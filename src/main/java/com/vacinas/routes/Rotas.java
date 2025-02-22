@@ -41,7 +41,7 @@ public class Rotas {
         Spark.get("/estatisticas/imunizacoes/idade_maior/:meses", ServicoEstatisticas.contarVacinasAcimaDeIdade());
 
         // Rotas para Doses
-        Spark.get("/dose/consultar/:id", ServicoDose.buscarDosePorId());
+        Spark.get("/dose/consultar/vacina/:id_vacina", ServicoDose.buscarDosesPorIdVacina());
         Spark.get("/dose/consultar", ServicoDose.consultarTodasDoses());
     }
 }

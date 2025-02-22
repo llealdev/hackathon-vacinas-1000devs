@@ -12,36 +12,36 @@ import spark.Route;
 
 public class ServicoDose {
 
-    public static Route buscarDosePorId() {
+    public static Route buscarDosesPorIdVacina() {
         return new Route() {
             @Override
             public Object handle(Request request, Response response) throws Exception {
                 ObjectMapper converteJson = new ObjectMapper();
-
-                int id;
-
+    
+                int idVacina;
+    
                 try {
-                    // Extrai o parâmetro id da URL (header HTTP), e converte para inteiro
-                    id = Integer.parseInt(request.params(":id"));
-
-                    // Busca a dose no banco de dados
-                    Dose dose = DoseDAO.buscarPorId(id);
-
-                    if (dose != null) {
+                    // Extrai o parâmetro id_vacina da URL (header HTTP), e converte para inteiro
+                    idVacina = Integer.parseInt(request.params(":id_vacina"));
+    
+                    // Busca as doses no banco de dados
+                    ArrayList<Dose> doses = DoseDAO.buscarPorIdVacina(idVacina);
+    
+                    if (!doses.isEmpty()) {
                         // Define o HTTP status code
                         response.status(200); // 200 OK
-
-                        // Retorna o objeto encontrado no formato JSON
-                        return converteJson.writeValueAsString(dose);
+    
+                        // Retorna a lista de doses no formato JSON
+                        return converteJson.writeValueAsString(doses);
                     } else {
                         // Define o HTTP status code
                         response.status(404); // 404 Not Found
-                        return "{\"message\": \"Nenhuma dose encontrada com este ID.\"}";
+                        return "{\"message\": \"Nenhuma dose encontrada para a vacina com ID " + idVacina + ".\"}";
                     }
                 } catch (NumberFormatException e) {
                     // Define o HTTP status code
                     response.status(400); // 400 Bad Request
-                    return "{\"message\": \"ID fornecido está no formato incorreto.\"}";
+                    return "{\"message\": \"ID da vacina fornecido está no formato incorreto.\"}";
                 }
             }
         };

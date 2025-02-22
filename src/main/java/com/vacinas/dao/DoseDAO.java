@@ -121,5 +121,29 @@ public class DoseDAO {
 
         return listaDoses;
     }  
-
+    public static ArrayList<Dose> buscarPorIdVacina(int idVacina) {
+        String sql = "SELECT * FROM dose WHERE id_vacina = ?";
+        ArrayList<Dose> doses = new ArrayList<>();
+    
+        try (Connection conexao = con.getConexao();
+             PreparedStatement comando = conexao.prepareStatement(sql)) {
+    
+            comando.setInt(1, idVacina);
+            ResultSet resultado = comando.executeQuery();
+    
+            while (resultado.next()) {
+                doses.add(new Dose(
+                    resultado.getInt("id"),
+                    resultado.getInt("id_vacina"),
+                    resultado.getString("dose"),
+                    resultado.getInt("idade_recomendada_aplicacao")
+                ));
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return doses;
+    }
 }
