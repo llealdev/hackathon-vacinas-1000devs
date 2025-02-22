@@ -72,7 +72,19 @@ public class ImunizacoesDAO{
     public static List<Imunizacoes> listarImunizacoes(){
         List<Imunizacoes> imunizacoes = new ArrayList<>();
 
-        String sql = "SELECT * FROM imunizacoes;";
+        String sql = "SELECT "
+                    + "p.nome, "
+                    + "v.vacina, "
+                    + "d.dose, "
+                    + "DATE_FORMAT(i.data_aplicacao, '%d/%m/%Y') AS data_aplicacao, "
+                    + "COALESCE(i.fabricante, '') AS fabricante, "
+                    + "COALESCE(i.lote, '') AS lote, "
+                    + "COALESCE(i.local_aplicacao, '') AS local_aplicacao, "
+                    + "COALESCE(i.profissional_aplicador, '') AS profissional_aplicador "
+                    + "FROM imunizacoes i "
+                    + "INNER JOIN paciente p ON p.id = i.id_paciente "
+                    + "INNER JOIN dose d ON d.id = i.id_dose "
+                    + "INNER JOIN vacina v ON v.id = d.id_vacina;";
 
         try {
             Connection conn = Conexao.getConexao();
