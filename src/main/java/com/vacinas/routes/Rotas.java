@@ -25,9 +25,11 @@ public class Rotas {
         Spark.delete("/imunizacao/excluir/:id", ServicoImunizacoes.excluirImunizacao());
         Spark.delete("/imunizacao/excluir/paciente/:id", ServicoImunizacoes.excluirTodasImunizacoesPorPaciente());
         Spark.get("/imunizacao/consultar", ServicoImunizacoes.consultarTodasImunizacoes());
+        Spark.get("/imunizacao/consultar/formatada", ServicoImunizacoes.consultarImunizacoesFormatadas());        
         Spark.get("/imunizacao/consultar/:id", ServicoImunizacoes.buscarImunizacaoPorId());
         Spark.get("/imunizacao/consultar/paciente/:id", ServicoImunizacoes.consultarImunizacoesPorPaciente());
         Spark.get("/imunizacao/consultar/paciente/:id/aplicacao/:dt_ini/:dt_fim", ServicoImunizacoes.consultarImunizacoesPorPacienteEPeriodo());
+
 
         // Rotas para Vacinas
         Spark.get("/vacinas/consultar", ServicoVacina.consultarTodasVacinas());

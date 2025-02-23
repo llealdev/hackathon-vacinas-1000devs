@@ -1,16 +1,18 @@
 package com.vacinas.dao;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
+import com.vacinas.dtos.ImunizacaoDTO;
 import com.vacinas.model.Imunizacoes;
 import com.vacinas.util.*;
 
-public class ImunizacoesDAO{
-    
+public class ImunizacoesDAO {
+
     // Método para cadastrar uma imunização
-    public static void cadastrarVacina(Imunizacoes imunizacoes){
-        String sql =  "INSERT INTO imunizacoes (id_paciente, id_dose, data_aplicacao, fabricante, lote, local_aplicacao, profissional_aplicador) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    public static void cadastrarVacina(Imunizacoes imunizacoes) {
+        String sql = "INSERT INTO imunizacoes (id_paciente, id_dose, data_aplicacao, fabricante, lote, local_aplicacao, profissional_aplicador) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         try {
             Connection conn = Conexao.getConexao();
@@ -25,16 +27,17 @@ public class ImunizacoesDAO{
             stmt.setString(4, imunizacoes.getFabricante() != null ? imunizacoes.getFabricante() : null);
             stmt.setString(5, imunizacoes.getLote() != null ? imunizacoes.getLote() : null);
             stmt.setString(6, imunizacoes.getLocalAplicacao() != null ? imunizacoes.getLocalAplicacao() : null);
-            stmt.setString(7, imunizacoes.getProfissionalAplicador() != null ? imunizacoes.getProfissionalAplicador() : null);
+            stmt.setString(7,
+                    imunizacoes.getProfissionalAplicador() != null ? imunizacoes.getProfissionalAplicador() : null);
 
             stmt.executeUpdate();
             System.out.println("Dados inseridos com sucesso!");
-            
+
             Conexao.closeConexao(conn);
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        }
     }
 
     // Método para buscar uma imunização por ID
@@ -67,24 +70,12 @@ public class ImunizacoesDAO{
 
         return imunizacao;
     }
-    
+
     // Método para listar todas imunizações
-    public static List<Imunizacoes> listarImunizacoes(){
+    public static List<Imunizacoes> listarImunizacoes() {
         List<Imunizacoes> imunizacoes = new ArrayList<>();
 
-        String sql = "SELECT "
-                    + "p.nome, "
-                    + "v.vacina, "
-                    + "d.dose, "
-                    + "DATE_FORMAT(i.data_aplicacao, '%d/%m/%Y') AS data_aplicacao, "
-                    + "COALESCE(i.fabricante, '') AS fabricante, "
-                    + "COALESCE(i.lote, '') AS lote, "
-                    + "COALESCE(i.local_aplicacao, '') AS local_aplicacao, "
-                    + "COALESCE(i.profissional_aplicador, '') AS profissional_aplicador "
-                    + "FROM imunizacoes i "
-                    + "INNER JOIN paciente p ON p.id = i.id_paciente "
-                    + "INNER JOIN dose d ON d.id = i.id_dose "
-                    + "INNER JOIN vacina v ON v.id = d.id_vacina;";
+        String sql = "SELECT * FROM imunizacoes;";
 
         try {
             Connection conn = Conexao.getConexao();
@@ -100,10 +91,10 @@ public class ImunizacoesDAO{
                 imunizacao.setFabricante(rs.getString("fabricante"));
                 imunizacao.setLote(rs.getString("lote"));
                 imunizacao.setLocalAplicacao(rs.getString("local_aplicacao"));
-                imunizacao.setProfissionalAplicador(rs.getString("profissional_aplicador"));    
-                
-                imunizacoes.add(imunizacao);             
-            }         
+                imunizacao.setProfissionalAplicador(rs.getString("profissional_aplicador"));
+
+                imunizacoes.add(imunizacao);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,10 +102,56 @@ public class ImunizacoesDAO{
         return imunizacoes;
     }
 
+    public static List<ImunizacaoDTO> listarImunizacoesFormatadas() {
+        List<ImunizacaoDTO> imunizacoesDTO = new ArrayList<>();
+
+        String sql = "SELECT "
+                + " p.nome AS nome_paciente, "
+                + " v.vacina AS nome_vacina, "
+                + " d.dose AS dose, "
+                + " i.data_aplicacao AS data_aplicacao, "
+                + " COALESCE(i.fabricante, '') AS fabricante, "
+                + " COALESCE(i.lote, '') AS lote, "
+                + " COALESCE(i.local_aplicacao, '') AS local_aplicacao, "
+                + " COALESCE(i.profissional_aplicador, '') AS profissional_aplicador "
+                + " FROM imunizacoes i "
+                + " INNER JOIN paciente p ON p.id = i.id_paciente "
+                + " INNER JOIN dose d ON d.id = i.id_dose "
+                + " INNER JOIN vacina v ON v.id = d.id_vacina "
+                + " ORDER BY i.data_aplicacao;";
+
+        try (Connection conn = Conexao.getConexao();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                ImunizacaoDTO imunizacaoDTO = new ImunizacaoDTO();
+
+                // Mapeando os resultados da consulta para o DTO
+                imunizacaoDTO.setNomePaciente(rs.getString("nome_paciente"));
+                imunizacaoDTO.setNomeVacina(rs.getString("nome_vacina"));
+                imunizacaoDTO.setDose(rs.getString("dose"));
+                imunizacaoDTO.setDataAplicacao(rs.getObject("data_aplicacao", LocalDate.class));
+                imunizacaoDTO.setFabricante(rs.getString("fabricante"));
+                imunizacaoDTO.setLote(rs.getString("lote"));
+                imunizacaoDTO.setLocalAplicacao(rs.getString("local_aplicacao"));
+                imunizacaoDTO.setProfissionalAplicador(rs.getString("profissional_aplicador"));
+
+                imunizacoesDTO.add(imunizacaoDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao buscar imunizações formatadas no banco de dados.", e);
+        }
+
+        return imunizacoesDTO;
+    }
+
     // Método para atualizar os dados de uma imunização
     public static void atualizarImunizacoes(Imunizacoes imunizacoes) {
-        String sql = "UPDATE imunizacoes SET id_paciente = ?, id_dose = ?, data_aplicacao = ?, fabricante = ?, lote = ?, local_aplicacao = ?, profissional_aplicador = ? " +
-                     "WHERE id = ?;";
+        String sql = "UPDATE imunizacoes SET id_paciente = ?, id_dose = ?, data_aplicacao = ?, fabricante = ?, lote = ?, local_aplicacao = ?, profissional_aplicador = ? "
+                +
+                "WHERE id = ?;";
 
         try {
 
@@ -127,7 +164,8 @@ public class ImunizacoesDAO{
             smt.setString(4, imunizacoes.getFabricante() != null ? imunizacoes.getFabricante() : null);
             smt.setString(5, imunizacoes.getLote() != null ? imunizacoes.getLote() : null);
             smt.setString(6, imunizacoes.getLocalAplicacao() != null ? imunizacoes.getLocalAplicacao() : null);
-            smt.setString(7, imunizacoes.getProfissionalAplicador() != null ? imunizacoes.getProfissionalAplicador() : null);
+            smt.setString(7,
+                    imunizacoes.getProfissionalAplicador() != null ? imunizacoes.getProfissionalAplicador() : null);
             smt.setInt(8, imunizacoes.getId());
 
             int rowsUpdated = smt.executeUpdate();
@@ -148,7 +186,7 @@ public class ImunizacoesDAO{
 
         try {
             Connection conn = Conexao.getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql); 
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, id);
 
@@ -162,7 +200,8 @@ public class ImunizacoesDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }   
+    }
+
     // Método para excluir todas as imunizações de um paciente
     public static int excluirTodasImunizacoesPorPaciente(int idPaciente) {
         String sql = "DELETE FROM imunizacoes WHERE id_paciente = ?;";
@@ -173,11 +212,11 @@ public class ImunizacoesDAO{
             stmt.setInt(1, idPaciente);
 
             int rowsDeleted = stmt.executeUpdate();
-            return rowsDeleted; 
+            return rowsDeleted;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return 0; 
+            return 0;
         }
     }
 
@@ -213,7 +252,8 @@ public class ImunizacoesDAO{
     }
 
     // Método para consultar imunizações por ID do paciente e intervalo de datas
-    public static List<Imunizacoes> consultarImunizacoesPorPacienteEPeriodo(int idPaciente, java.sql.Date dataInicio, java.sql.Date dataFim) {
+    public static List<Imunizacoes> consultarImunizacoesPorPacienteEPeriodo(int idPaciente, java.sql.Date dataInicio,
+            java.sql.Date dataFim) {
         List<Imunizacoes> imunizacoes = new ArrayList<>();
         String sql = "SELECT * FROM imunizacoes WHERE id_paciente = ? AND data_aplicacao BETWEEN ? AND ?;";
 
@@ -244,6 +284,5 @@ public class ImunizacoesDAO{
         }
         return imunizacoes;
     }
-
 
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vacinas.dao.ImunizacoesDAO;
+import com.vacinas.dtos.ImunizacaoDTO;
 import com.vacinas.model.Imunizacoes;
 
 import spark.Request;
@@ -17,52 +18,55 @@ import spark.Route;
 
 public class ServicoImunizacoes {
 
-public static Route cadastrarImunizacao() {
-    return new Route() {
-        @Override
-        public Object handle(Request request, Response response) throws Exception {
+    public static Route cadastrarImunizacao() {
+        return new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
 
-            // Ler JSON do corpo da requisição
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, String> jsonMap = objectMapper.readValue(request.body(), new TypeReference<Map<String, String>>() {});
+                // Ler JSON do corpo da requisição
+                ObjectMapper objectMapper = new ObjectMapper();
+                Map<String, String> jsonMap = objectMapper.readValue(request.body(),
+                        new TypeReference<Map<String, String>>() {
+                        });
 
-            // Extrair os valores do JSON
-            int idPaciente = Integer.parseInt(jsonMap.get("id_paciente"));
-            int idDose = Integer.parseInt(jsonMap.get("id_dose"));
-            String dataAplicacaoStr = jsonMap.get("data_aplicacao");
-            String fabricante = jsonMap.get("fabricante");
-            String lote = jsonMap.get("lote");
-            String localAplicacao = jsonMap.get("local_aplicacao");
-            String profissionalAplicador = jsonMap.get("profissional_aplicador");
+                // Extrair os valores do JSON
+                int idPaciente = Integer.parseInt(jsonMap.get("id_paciente"));
+                int idDose = Integer.parseInt(jsonMap.get("id_dose"));
+                String dataAplicacaoStr = jsonMap.get("data_aplicacao");
+                String fabricante = jsonMap.get("fabricante");
+                String lote = jsonMap.get("lote");
+                String localAplicacao = jsonMap.get("local_aplicacao");
+                String profissionalAplicador = jsonMap.get("profissional_aplicador");
 
-            // Converter a Data
-            Date dataAplicacao;
-            if (dataAplicacaoStr != null && !dataAplicacaoStr.isEmpty()) {
-                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate localDate = LocalDate.parse(dataAplicacaoStr, fmt);
-                dataAplicacao = Date.valueOf(localDate); // Converter LocalDate para java.sql.Date
-            } else {
-                throw new IllegalArgumentException("Data de aplicação não pode ser nula ou vazia.");
+                // Converter a Data
+                Date dataAplicacao;
+                if (dataAplicacaoStr != null && !dataAplicacaoStr.isEmpty()) {
+                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate localDate = LocalDate.parse(dataAplicacaoStr, fmt);
+                    dataAplicacao = Date.valueOf(localDate); // Converter LocalDate para java.sql.Date
+                } else {
+                    throw new IllegalArgumentException("Data de aplicação não pode ser nula ou vazia.");
+                }
+
+                // Cria o objeto imunização na memória
+                Imunizacoes imunizacao = new Imunizacoes(0, idPaciente, idDose, dataAplicacao, fabricante, lote,
+                        localAplicacao, profissionalAplicador);
+
+                try {
+                    // Cadastra a imunização no banco de dados
+                    ImunizacoesDAO.cadastrarVacina(imunizacao);
+
+                    // 201 Created
+                    response.status(201);
+                    return "{\"message\": \"Imunização cadastrada com sucesso.\"}";
+
+                } catch (Exception e) {
+                    response.status(500); // 500 Internal Server Error
+                    return "{\"message\": \"" + e.getMessage() + "\"}";
+                }
             }
-
-            // Cria o objeto imunização na memória
-            Imunizacoes imunizacao = new Imunizacoes(0, idPaciente, idDose, dataAplicacao, fabricante, lote, localAplicacao, profissionalAplicador);
-
-            try {
-                // Cadastra a imunização no banco de dados
-                ImunizacoesDAO.cadastrarVacina(imunizacao);
-
-                // 201 Created
-                response.status(201);
-                return "{\"message\": \"Imunização cadastrada com sucesso.\"}";
-
-            } catch (Exception e) {
-                response.status(500); // 500 Internal Server Error
-                return "{\"message\": \"" + e.getMessage() + "\"}";
-            }
-        }
-    };
-}
+        };
+    }
 
     public static Route buscarImunizacaoPorId() {
         return new Route() {
@@ -143,7 +147,8 @@ public static Route cadastrarImunizacao() {
                     Date dataAplicacao = Date.valueOf(localDate.toString());
 
                     // Cria o objeto imunização na memória
-                    Imunizacoes imunizacao = new Imunizacoes(id, idPaciente, idDose, dataAplicacao, fabricante, lote, localAplicacao, profissionalAplicador);
+                    Imunizacoes imunizacao = new Imunizacoes(id, idPaciente, idDose, dataAplicacao, fabricante, lote,
+                            localAplicacao, profissionalAplicador);
 
                     // Atualiza a imunização no banco de dados
                     ImunizacoesDAO.atualizarImunizacoes(imunizacao);
@@ -184,6 +189,29 @@ public static Route cadastrarImunizacao() {
         };
     }
 
+    public static Route consultarImunizacoesFormatadas() {
+        return (request, response) -> {
+            ObjectMapper converterJson = new ObjectMapper();
+
+            try {
+                List<ImunizacaoDTO> imunizacoesDTO = ImunizacoesDAO.listarImunizacoesFormatadas();
+
+                if (imunizacoesDTO.isEmpty()) {
+                    response.status(200); // 200 OK
+                    return "{\"message\": \"Nenhuma imunização encontrada no banco de dados.\"}";
+                } else {
+                    response.status(200); // 200 OK
+                    response.type("application/json");
+                    return converterJson.writeValueAsString(imunizacoesDTO);
+                }
+            } catch (Exception e) {
+                response.status(500); // 500 Internal Server Error
+                return "{\"message\": \"Erro ao processar a requisição.\"}";
+            }
+        };
+    }
+
+
     public static Route excluirTodasImunizacoesPorPaciente() {
         return new Route() {
             @Override
@@ -197,10 +225,12 @@ public static Route cadastrarImunizacao() {
 
                     if (rowsDeleted > 0) {
                         response.status(200); // 200 OK
-                        return "{\"message\": \"Todas as imunizações do paciente com id " + idPaciente + " foram excluídas com sucesso.\"}";
+                        return "{\"message\": \"Todas as imunizações do paciente com id " + idPaciente
+                                + " foram excluídas com sucesso.\"}";
                     } else {
                         response.status(404); // 404 Not Found
-                        return "{\"message\": \"Nenhuma imunização encontrada para o paciente com id " + idPaciente + ".\"}";
+                        return "{\"message\": \"Nenhuma imunização encontrada para o paciente com id " + idPaciente
+                                + ".\"}";
                     }
 
                 } catch (NumberFormatException e) {
@@ -228,7 +258,8 @@ public static Route cadastrarImunizacao() {
 
                     if (imunizacoes.isEmpty()) {
                         response.status(204); // 204 No Content
-                        return "{\"message\": \"Nenhuma imunização encontrada para o paciente com id " + idPaciente + ".\"}";
+                        return "{\"message\": \"Nenhuma imunização encontrada para o paciente com id " + idPaciente
+                                + ".\"}";
                     } else {
                         response.status(200); // 200 OK
                         return converterJson.writeValueAsString(imunizacoes);
@@ -264,11 +295,13 @@ public static Route cadastrarImunizacao() {
                     Date dataFim = Date.valueOf(localDateFim.toString());
 
                     // Busca as imunizações do paciente no período especificado
-                    List<Imunizacoes> imunizacoes = ImunizacoesDAO.consultarImunizacoesPorPacienteEPeriodo(idPaciente, dataInicio, dataFim);
+                    List<Imunizacoes> imunizacoes = ImunizacoesDAO.consultarImunizacoesPorPacienteEPeriodo(idPaciente,
+                            dataInicio, dataFim);
 
                     if (imunizacoes.isEmpty()) {
                         response.status(204); // 204 No Content
-                        return "{\"message\": \"Nenhuma imunização encontrada para o paciente com id " + idPaciente + " no período especificado.\"}";
+                        return "{\"message\": \"Nenhuma imunização encontrada para o paciente com id " + idPaciente
+                                + " no período especificado.\"}";
                     } else {
                         response.status(200); // 200 OK
                         return converterJson.writeValueAsString(imunizacoes);
