@@ -11,11 +11,12 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY --from=build /app/target/original-vacinas-java-1.0.jar /app/app.jar
+COPY --from=build /app/target/*.jar /app/app.jar
 
 EXPOSE 3051
 
-CMD ["java", "-jar", "/app/app.jar"]
+CMD ["java", "-jar", "/app/app.jar", "--server.port=3051"]
+
 
 
 
