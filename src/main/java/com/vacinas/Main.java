@@ -9,7 +9,7 @@ import spark.Response;
 import spark.Route;
 
 
-public class App 
+public class Main 
 {
     
     public static void main( String[] args )

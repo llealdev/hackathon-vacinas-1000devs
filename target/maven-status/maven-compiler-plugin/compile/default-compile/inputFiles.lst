@@ -2,11 +2,11 @@
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/service/ServicoDose.java
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/dao/EstatisticasDAO.java
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/service/ServicoEstatisticas.java
-/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/App.java
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/service/ServicoPaciente.java
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/dao/DoseDAO.java
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/model/Vacina.java
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/model/Dose.java
+/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/Main.java
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/routes/Rotas.java
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/util/Conexao.java
 /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/src/main/java/com/vacinas/dao/ImunizacoesDAO.java

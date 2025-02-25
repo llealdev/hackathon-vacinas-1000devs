@@ -14,7 +14,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.vacinas.App</mainClass>
+              <mainClass>com.vacinas.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -31,7 +31,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.vacinas.App</mainClass>
+                  <mainClass>com.vacinas.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>

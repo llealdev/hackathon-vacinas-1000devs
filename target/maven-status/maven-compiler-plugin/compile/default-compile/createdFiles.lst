@@ -1,9 +1,9 @@
 com/vacinas/service/ServicoPaciente.class
+com/vacinas/Main$1.class
 com/vacinas/model/Paciente$Sexo.class
 com/vacinas/service/ServicoImunizacoes$3.class
 com/vacinas/service/ServicoImunizacoes$5.class
 com/vacinas/service/ServicoEstatisticas$4.class
-com/vacinas/App$1.class
 com/vacinas/dao/VacinaDAO.class
 com/vacinas/service/ServicoEstatisticas.class
 com/vacinas/service/ServicoPaciente$2.class
@@ -38,8 +38,8 @@ com/vacinas/service/ServicoDose.class
 com/vacinas/service/ServicoPaciente$3.class
 com/vacinas/dao/DoseDAO.class
 com/vacinas/service/ServicoEstatisticas$2.class
+com/vacinas/Main.class
 com/vacinas/model/Imunizacoes.class
-com/vacinas/App.class
 com/vacinas/service/ServicoPaciente$5.class
 com/vacinas/model/Vacina.class
 com/vacinas/service/ServicoVacina$3.class

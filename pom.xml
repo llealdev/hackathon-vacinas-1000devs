@@ -86,7 +86,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.vacinas.App</mainClass>
+              <mainClass>com.vacinas.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -105,7 +105,7 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>com.vacinas.App</mainClass>
+                  <mainClass>com.vacinas.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>
