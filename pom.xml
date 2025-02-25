@@ -105,7 +105,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>com.vacinas.Main</mainClass> <!-- Substitua pelo seu main class -->
+                <mainClass>com.vacinas.App</mainClass> <!-- Substitua pelo seu main class -->
               </manifest>
             </archive>
           </configuration>
