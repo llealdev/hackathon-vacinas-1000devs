@@ -4,10 +4,9 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y maven
 
-COPY src app/src
-COPY pom.xml /app
+COPY . .
 
-RUN mvn clean install
+RUN mvn clean package -DskipTests
 
 FROM openjdk:17-jdk-slim
 
@@ -15,7 +14,39 @@ WORKDIR /app
 
 COPY --from=build /app/target/vacinas-java-1.0.jar /app/app.jar
 
-
 EXPOSE 3050
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "/app/app.jar"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
