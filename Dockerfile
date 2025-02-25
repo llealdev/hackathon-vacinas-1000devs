@@ -2,11 +2,10 @@ FROM openjdk:17-jdk-slim AS build
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y maven
-
+RUN apt-get update && apt-get install -y maven ca-certificates
 COPY pom.xml /app/
 
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -U
 
 FROM openjdk:17-jdk-slim
 
