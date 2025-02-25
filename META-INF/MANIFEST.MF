@@ -1,5 +1,7 @@
 Manifest-Version: 1.0
-Created-By: Maven Jar Plugin 3.2.0
-Build-Jdk-Spec: 17
-Main-Class: com.vacinas.App
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven 3.8.7
+Built-By: matheus-leal
+Build-Jdk: 17.0.14
+Main-Class: com.vacinas.Main
 

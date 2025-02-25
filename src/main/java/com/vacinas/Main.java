@@ -26,13 +26,13 @@ public class Main
             
                 @Override  
                 public Object handle(Request requisicaoHttp, Response responseHttp) throws Exception{
-                    String acessControlRquestHeaders = requisicaoHttp.headers("Access-Contral-Request-Headers");
+                    String accessControlRequestHeaders = requisicaoHttp.headers("Access-Control-Request-Headers");
     
-                    if(acessControlRquestHeaders != null){
-                        responseHttp.header("Access-Contral-Allow-Headers", acessControlRquestHeaders);
+                    if(accessControlRequestHeaders != null){
+                        responseHttp.header("Access-Contral-Allow-Headers", accessControlRequestHeaders);
                     }
     
-                    String accessControlRequestMethod = requisicaoHttp.headers("Access-Contral-Request-Headers");
+                    String accessControlRequestMethod = requisicaoHttp.headers("Access-Control-Request-Method");
     
                     if (accessControlRequestMethod != null){
                         responseHttp.header("Access-Contral-Allow-Method", accessControlRequestMethod);
