@@ -1,56 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.vacinas.AppTest" time="0.015" tests="1" errors="0" skipped="0" failures="0">
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="1" failures="0" name="com.vacinas.AppTest" time="0.001" errors="0" skipped="0">
   <properties>
-    <property name="java.specification.version" value="17"/>
-    <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/target/test-classes:/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/target/classes:/home/matheus-leal/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/matheus-leal/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/matheus-leal/.m2/repository/io/github/cdimascio/dotenv-java/3.2.0/dotenv-java-3.2.0.jar:/home/matheus-leal/.m2/repository/org/postgresql/postgresql/42.7.5/postgresql-42.7.5.jar:/home/matheus-leal/.m2/repository/org/checkerframework/checker-qual/3.48.3/checker-qual-3.48.3.jar:/home/matheus-leal/.m2/repository/com/sparkjava/spark-core/2.6.0/spark-core-2.6.0.jar:/home/matheus-leal/.m2/repository/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-server/9.4.4.v20170414/jetty-server-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-http/9.4.4.v20170414/jetty-http-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-util/9.4.4.v20170414/jetty-util-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-io/9.4.4.v20170414/jetty-io-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-webapp/9.4.4.v20170414/jetty-webapp-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-xml/9.4.4.v20170414/jetty-xml-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-servlet/9.4.4.v20170414/jetty-servlet-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-security/9.4.4.v20170414/jetty-security-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-server/9.4.4.v20170414/websocket-server-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-common/9.4.4.v20170414/websocket-common-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-client/9.4.4.v20170414/websocket-client-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-client/9.4.4.v20170414/jetty-client-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-servlet/9.4.4.v20170414/websocket-servlet-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-api/9.4.4.v20170414/websocket-api-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.8.8.1/jackson-databind-2.8.8.1.jar:/home/matheus-leal/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.8.0/jackson-annotations-2.8.0.jar:/home/matheus-leal/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.8/jackson-core-2.8.8.jar:/home/matheus-leal/.m2/repository/ch/qos/logback/logback-classic/1.2.2/logback-classic-1.2.2.jar:/home/matheus-leal/.m2/repository/ch/qos/logback/logback-core/1.2.2/logback-core-1.2.2.jar:/home/matheus-leal/.m2/repository/org/json/json/20210307/json-20210307.jar:"/>
-    <property name="java.vm.vendor" value="Ubuntu"/>
-    <property name="sun.arch.data.model" value="64"/>
-    <property name="java.vendor.url" value="https://ubuntu.com/"/>
-    <property name="os.name" value="Linux"/>
-    <property name="java.vm.specification.version" value="17"/>
-    <property name="sun.java.launcher" value="SUN_STANDARD"/>
-    <property name="user.country" value="BR"/>
+    <property name="jansi.mode" value="force"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="java.vm.version" value="17.0.14+7-Ubuntu-124.04"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-17-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/target/surefire/surefirebooter15821018515629915627.jar /home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/target/surefire 2025-02-24T23-23-14_966-jvmRun1 surefire12935255858897820505tmp surefire_018037435803520449813tmp"/>
+    <property name="maven.multiModuleProjectDirectory" value="/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java"/>
+    <property name="java.vm.vendor" value="Ubuntu"/>
+    <property name="java.vendor.url" value="https://ubuntu.com/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=":"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="java.runtime.version" value="17.0.14+7-Ubuntu-124.04"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.name" value="Linux"/>
+    <property name="classworlds.conf" value="/usr/share/maven/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="maven.conf" value="/usr/share/maven/conf"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/target/test-classes:/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/target/classes:/home/matheus-leal/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/matheus-leal/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/matheus-leal/.m2/repository/io/github/cdimascio/dotenv-java/3.2.0/dotenv-java-3.2.0.jar:/home/matheus-leal/.m2/repository/org/postgresql/postgresql/42.7.5/postgresql-42.7.5.jar:/home/matheus-leal/.m2/repository/org/checkerframework/checker-qual/3.48.3/checker-qual-3.48.3.jar:/home/matheus-leal/.m2/repository/com/sparkjava/spark-core/2.6.0/spark-core-2.6.0.jar:/home/matheus-leal/.m2/repository/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-server/9.4.4.v20170414/jetty-server-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-http/9.4.4.v20170414/jetty-http-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-util/9.4.4.v20170414/jetty-util-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-io/9.4.4.v20170414/jetty-io-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-webapp/9.4.4.v20170414/jetty-webapp-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-xml/9.4.4.v20170414/jetty-xml-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-servlet/9.4.4.v20170414/jetty-servlet-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-security/9.4.4.v20170414/jetty-security-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-server/9.4.4.v20170414/websocket-server-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-common/9.4.4.v20170414/websocket-common-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-client/9.4.4.v20170414/websocket-client-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/jetty-client/9.4.4.v20170414/jetty-client-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-servlet/9.4.4.v20170414/websocket-servlet-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/org/eclipse/jetty/websocket/websocket-api/9.4.4.v20170414/websocket-api-9.4.4.v20170414.jar:/home/matheus-leal/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.8.8.1/jackson-databind-2.8.8.1.jar:/home/matheus-leal/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.8.0/jackson-annotations-2.8.0.jar:/home/matheus-leal/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.8.8/jackson-core-2.8.8.jar:/home/matheus-leal/.m2/repository/ch/qos/logback/logback-classic/1.2.2/logback-classic-1.2.2.jar:/home/matheus-leal/.m2/repository/ch/qos/logback/logback-core/1.2.2/logback-core-1.2.2.jar:/home/matheus-leal/.m2/repository/org/json/json/20210307/json-20210307.jar:"/>
-    <property name="sun.cpu.endian" value="little"/>
+    <property name="java.class.version" value="61.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.8.0-52-generic"/>
+    <property name="library.jansi.path" value="/usr/share/maven/lib/jansi-native"/>
     <property name="user.home" value="/home/matheus-leal"/>
+    <property name="user.timezone" value="America/Bahia"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="17"/>
+    <property name="user.name" value="matheus-leal"/>
+    <property name="java.class.path" value="/usr/share/maven/boot/plexus-classworlds-2.x.jar"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean package"/>
+    <property name="java.home" value="/usr/lib/jvm/java-17-openjdk-amd64"/>
     <property name="user.language" value="pt"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="java.version.date" value="2025-01-21"/>
-    <property name="java.home" value="/usr/lib/jvm/java-17-openjdk-amd64"/>
-    <property name="file.separator" value="/"/>
-    <property name="basedir" value="/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java"/>
-    <property name="java.vm.compressedOopsMode" value="Zero based"/>
-    <property name="line.separator" value="&#10;"/>
-    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java/target/surefire/surefirebooter15821018515629915627.jar"/>
-    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="java.runtime.version" value="17.0.14+7-Ubuntu-124.04"/>
-    <property name="user.name" value="matheus-leal"/>
-    <property name="path.separator" value=":"/>
-    <property name="os.version" value="6.8.0-52-generic"/>
-    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
-    <property name="file.encoding" value="UTF-8"/>
-    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
-    <property name="localRepository" value="/home/matheus-leal/.m2/repository"/>
-    <property name="java.vendor.url.bug" value="https://bugs.launchpad.net/ubuntu/+source/openjdk-17"/>
-    <property name="java.io.tmpdir" value="/tmp"/>
-    <property name="java.version" value="17.0.14"/>
-    <property name="user.dir" value="/home/matheus-leal/Documentos/JAVA-PROJECTS/hackathonVacinas1000Devs/vacinas-java"/>
-    <property name="os.arch" value="amd64"/>
-    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="native.encoding" value="UTF-8"/>
-    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
     <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.version" value="17.0.14"/>
+    <property name="native.encoding" value="UTF-8"/>
     <property name="java.vendor" value="Ubuntu"/>
-    <property name="java.vm.version" value="17.0.14+7-Ubuntu-124.04"/>
+    <property name="sun.stderr.encoding" value="UTF-8"/>
     <property name="java.specification.maintenance.version" value="1"/>
+    <property name="maven.home" value="/usr/share/maven"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.version.date" value="2025-01-21"/>
+    <property name="java.vendor.url.bug" value="https://bugs.launchpad.net/ubuntu/+source/openjdk-17"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="java.class.version" value="61.0"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.stdout.encoding" value="UTF-8"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="com.vacinas.AppTest" time="0.001"/>
+  <testcase classname="com.vacinas.AppTest" name="shouldAnswerWithTrue" time="0.001"/>
 </testsuite>
