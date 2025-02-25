@@ -19,7 +19,7 @@ public class App
         try {
             
             // Define a porta do servidor
-            Spark.port(3050);   
+            Spark.port(3051);   
 
             // Configuração do CORS (Cross-Origin Resource Sharing)
             Spark.options("/*", new Route(){

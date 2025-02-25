@@ -13,7 +13,7 @@ WORKDIR /app
 
 COPY --from=build /app/target/vacinas-java-1.0.jar /app/app.jar
 
-EXPOSE 3050
+EXPOSE 3051
 
 CMD ["java", "-jar", "/app/app.jar"]
 
