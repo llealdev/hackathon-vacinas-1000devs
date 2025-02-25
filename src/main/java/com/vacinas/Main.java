@@ -53,7 +53,7 @@ public class Main
             Rotas.processarRotas();
 
             // Mensagem de inicialização do servidor
-            System.out.println("Servidor SparkJava rodando na porta 8080...");           
+            System.out.println("Servidor SparkJava rodando na porta 3051...");           
         } catch (Exception e) {
             e.printStackTrace();
         }
