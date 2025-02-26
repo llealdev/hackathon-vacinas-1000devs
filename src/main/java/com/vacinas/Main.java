@@ -3,6 +3,9 @@ package com.vacinas;
 import spark.Spark;
 
 import com.vacinas.routes.Rotas;
+import com.vacinas.util.Conexao;
+import java.sql.*;
+
 
 import spark.Request;
 import spark.Response;
@@ -17,7 +20,10 @@ public class Main
 
 
         try {
-            
+             Connection conn = Conexao.getConexao();
+
+             System.out.println(conn);
+             
             // Define a porta do servidor
             Spark.port(3051);   
 
