@@ -1,53 +1,49 @@
 package com.vacinas;
 
 import spark.Spark;
-
 import com.vacinas.routes.Rotas;
 import com.vacinas.util.Conexao;
 import java.sql.*;
-
 
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+public class Main {
 
-public class Main 
-{
-    
-    public static void main( String[] args )
-    {
-
-
+    public static void main(String[] args) {
         try {
-             Connection conn = Conexao.getConexao();
+            // Conecta ao banco de dados
+            Connection conn = Conexao.getConexao();
 
-             System.out.println(conn);
+            // Verifica se a conexão foi bem-sucedida
+            if (conn != null) {
+                System.out.println("Conexão com o banco de dados realizada com sucesso!");
+            }
 
             // Define a porta do servidor
-            Spark.port(3051);   
+            Spark.port(3051);
 
             // Configuração do CORS (Cross-Origin Resource Sharing)
-            Spark.options("/*", new Route(){
-            
-                @Override  
-                public Object handle(Request requisicaoHttp, Response responseHttp) throws Exception{
+            Spark.options("/*", new Route() {
+                @Override
+                public Object handle(Request requisicaoHttp, Response responseHttp) throws Exception {
                     String accessControlRequestHeaders = requisicaoHttp.headers("Access-Control-Request-Headers");
-    
-                    if(accessControlRequestHeaders != null){
-                        responseHttp.header("Access-Contral-Allow-Headers", accessControlRequestHeaders);
+
+                    if (accessControlRequestHeaders != null) {
+                        responseHttp.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
                     }
-    
+
                     String accessControlRequestMethod = requisicaoHttp.headers("Access-Control-Request-Method");
-    
-                    if (accessControlRequestMethod != null){
-                        responseHttp.header("Access-Contral-Allow-Method", accessControlRequestMethod);
+
+                    if (accessControlRequestMethod != null) {
+                        responseHttp.header("Access-Control-Allow-Method", accessControlRequestMethod);
                     }
-    
+
                     return "OK";
                 }
             });
-    
+
             // Configuração global do CORS para todas as rotas
             Spark.before((requisicaoHttp, respostaHttp) -> {
                 respostaHttp.header("Access-Control-Allow-Origin", "*"); // Permite todas as origens
@@ -59,12 +55,16 @@ public class Main
             Rotas.processarRotas();
 
             // Mensagem de inicialização do servidor
-            System.out.println("Servidor SparkJava rodando na porta 3051...");           
-        } catch (Exception e) {
-            e.printStackTrace();
-        } catch (SQLException ex){
-            throw new SQLException("Erro ao conectar! " + ex.getMessage());
-        }
+            System.out.println("Servidor SparkJava rodando na porta 3051...");
 
+        } catch (SQLException ex) {
+            // Trata exceções de banco de dados (como problemas na conexão)
+            System.err.println("Erro ao conectar ao banco de dados: " + ex.getMessage());
+            ex.printStackTrace();
+        } catch (Exception e) {
+            // Trata outras exceções gerais
+            System.err.println("Erro inesperado: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
