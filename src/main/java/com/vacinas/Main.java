@@ -23,7 +23,7 @@ public class Main
              Connection conn = Conexao.getConexao();
 
              System.out.println(conn);
-             
+
             // Define a porta do servidor
             Spark.port(3051);   
 
@@ -62,6 +62,8 @@ public class Main
             System.out.println("Servidor SparkJava rodando na porta 3051...");           
         } catch (Exception e) {
             e.printStackTrace();
+        } catch (SQLException ex){
+            throw new SQLException("Erro ao conectar! " + ex.getMessage());
         }
 
     }
