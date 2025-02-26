@@ -9,13 +9,14 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class Conexao {
 
     // Carrega as variáveis de ambiente do arquivo .env
-    private static final Dotenv dotenv = Dotenv.configure().load();
+    private static final Dotenv dotenv = Dotenv.configure().directory("./").load();
 
     // Obtém as variáveis de ambiente
     private static final String DB_URL = dotenv.get("DB_URL");
     private static final String DB_USER = dotenv.get("DB_USER");
     private static final String DB_PASSWORD = dotenv.get("DB_PASSWORD");
-    
+
+
     //Atributos estáticos com os dados do Banco de Dados
     public static Connection getConexao() throws SQLException { 
         Connection connection = null;
